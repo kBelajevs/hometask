@@ -8,9 +8,8 @@ import task.service.DictionaryService;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
 
-@SpringBootTest(webEnvironment = DEFINED_PORT)
+@SpringBootTest
 public class DictionaryControllerIntegrationTest {
 
     MockMvcRequestSpecification spec = given().standaloneSetup(new DictionaryController(new DictionaryService()));
