@@ -14,13 +14,17 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 public class DictionaryControllerIntegrationTest {
 
     MockMvcRequestSpecification spec = given().standaloneSetup(new DictionaryController(new DictionaryService()));
+    private static final String EMPTY = "[]";
+    private static final String CONTAINS_CAT_AND_DOG = "[\"cat\",\"dog\"]";
+    private static final String CONTAINS_CAT = "[\"cat\"]";
+
 
     @Test
     public void shouldReturnEmptyListIfNoWordsFound() {
         spec.get("/dictionary/containsV1?line=abc&ignoreCase=true")
                 .then()
                 .statusCode(200)
-                .body(is(equalTo("[]")));
+                .body(is(equalTo(EMPTY)));
     }
 
     @Test
@@ -28,7 +32,7 @@ public class DictionaryControllerIntegrationTest {
         spec.get("/dictionary/containsV1?line=catblablavladog&ignoreCase=true")
                 .then()
                 .statusCode(200)
-                .body(is(equalTo("[\"cat\",\"dog\"]")));
+                .body(is(equalTo(CONTAINS_CAT_AND_DOG)));
     }
 
     @Test
@@ -36,7 +40,7 @@ public class DictionaryControllerIntegrationTest {
         spec.get("/dictionary/containsV1?line=catblablavlaDog&ignoreCase=false")
                 .then()
                 .statusCode(200)
-                .body(is(equalTo("[\"cat\"]")));
+                .body(is(equalTo(CONTAINS_CAT)));
     }
 
     @Test
@@ -44,7 +48,7 @@ public class DictionaryControllerIntegrationTest {
         spec.get("/dictionary/containsV1?line=catblablavlaDog")
                 .then()
                 .statusCode(200)
-                .body(is(equalTo("[\"cat\"]")));
+                .body(is(equalTo(CONTAINS_CAT)));
     }
 
     @Test
@@ -52,7 +56,7 @@ public class DictionaryControllerIntegrationTest {
         spec.get("/dictionary/containsV2?line=abc&ignoreCase=true")
                 .then()
                 .statusCode(200)
-                .body(is(equalTo("[]")));
+                .body(is(equalTo(EMPTY)));
     }
 
     @Test
@@ -60,7 +64,7 @@ public class DictionaryControllerIntegrationTest {
         spec.get("/dictionary/containsV2?line=catblablavladog&ignoreCase=true")
                 .then()
                 .statusCode(200)
-                .body(is(equalTo("[\"cat\",\"dog\"]")));
+                .body(is(equalTo(CONTAINS_CAT_AND_DOG)));
     }
 
     @Test
@@ -68,7 +72,7 @@ public class DictionaryControllerIntegrationTest {
         spec.get("/dictionary/containsV2?line=catblablavlaDog&ignoreCase=false")
                 .then()
                 .statusCode(200)
-                .body(is(equalTo("[\"cat\"]")));
+                .body(is(equalTo(CONTAINS_CAT)));
     }
 
     @Test
@@ -76,6 +80,6 @@ public class DictionaryControllerIntegrationTest {
         spec.get("/dictionary/containsV2?line=catblablavlaDog")
                 .then()
                 .statusCode(200)
-                .body(is(equalTo("[\"cat\"]")));
+                .body(is(equalTo(CONTAINS_CAT)));
     }
 }
